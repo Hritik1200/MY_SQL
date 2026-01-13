@@ -1,0 +1,140 @@
+/* ==============================================================================
+   SQL Data Manipulation Language (DML)
+-------------------------------------------------------------------------------
+   This guide covers the essential DML commands used for inserting, updating, 
+   and deleting data in database tables.
+
+   Table of Contents:
+     1. INSERT - Adding Data to Tables
+     2. UPDATE - Modifying Existing Data
+     3. DELETE - Removing Data from Tables
+=================================================================================
+*/
+
+/* ============================================================================== 
+   INSERT
+=============================================================================== */
+/* #1 Method: Manual INSERT using VALUES */
+-- Insert new records into the customers table
+
+/* optional to specify column names when inserting values but if not 
+specified sql expects all values for all columns without missing
+any column and the number columns speecified values should be also same order same colums*/
+
+insert into customers (id,first_name,country,score)
+values (6,'hritik','india' ,99);
+
+insert into customers
+values (7,'vishal','india',98);
+
+-- only specific column
+
+insert into customers (id,first_name)
+values (8,'gaurav');
+
+-- adding multiple values
+
+insert into customers 
+values (9,'aniket','india',96),
+(10,'vishnu','india',95);
+
+-- Incorrect column order 
+INSERT INTO customers (id, first_name, country, score)
+VALUES 
+    (8, 'Max', 'USA', NULL);
+    
+-- Incorrect data type in values
+INSERT INTO customers (id, first_name, country, score)
+VALUES 
+	('Max', 9, 'Max', NULL);
+
+-- Insert a new record with full column values
+INSERT INTO customers (id, first_name, country, score)
+VALUES (13, 'Max', 'USA', 368);
+
+-- Insert a new record without specifying column names (not recommended)
+INSERT INTO customers 
+VALUES 
+    (12, 'Andreas', 'Germany', NULL);
+    
+-- Insert a record with only id and first_name (other columns will be NULL or default values)
+INSERT INTO customers (id, first_name)
+VALUES 
+    (11, 'Sahra');
+    
+    
+/* #2 Method: INSERT DATA USING SELECT - Moving Data From One Table to Another */
+-- Copy data from the 'customers' table into 'persons'
+
+select id,first_name,null,'unknown' from customers;
+
+insert into persons(id,person_name,birth_date,phone)
+select id,first_name,null,'unknown' from customers;
+
+
+/* ============================================================================== 
+   UPDATE
+=============================================================================== */
+
+-- Change the score of customer with ID 6 to 0
+SELECT * FROM CUSTOMERS;
+
+UPDATE customers
+SET SCORE = 0
+WHERE ID = 6;
+/* ALWAYS SPECIFY (WHERE) CLAUSE OR YOU CHANGE ALL DATA IN THE COLUMN
+WITHOUT WHERE ALL ROWS WILL BE UPDATED AND ALL VALUES IN SCORE COLUMN WILL BE ZERO*/
+
+
+-- Change the score of customer with ID 10 to 0 and update the country to 'UK'
+
+UPDATE CUSTOMERS
+SET SCORE = 0,
+COUNTRY = 'UK'
+WHERE ID = 10;
+
+-- Update all customers with a NULL score by setting their score to 0
+-- Source - https://stackoverflow.com/a
+-- Posted by Habibillah, modified by community. See post 'Timeline' for change history
+-- Retrieved 2026-01-13, License - CC BY-SA 3.0
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE customers
+SET SCORE = 0
+WHERE SCORE IS NULL;
+
+
+-- Verify the update
+SELECT *
+FROM customers
+WHERE score IS NULL;
+
+/* ============================================================================== 
+   DELETE
+=============================================================================== */
+
+-- Select customers with an ID greater than 5 before deleting
+
+SELECT * FROM CUSTOMERS 
+WHERE ID>5;
+
+-- Delete all customers with an ID greater than 5
+DELETE  FROM CUSTOMERS
+WHERE ID>5;
+-- ALWAYS USE (WHERE) CLAUSE WHILE USING DELETE OR IT WILL DELETE WHOLE DATA 
+
+-- Delete all data from the persons table
+DELETE FROM PERSONS;
+
+-- Faster method to delete all rows, especially useful for large tables
+
+TRUNCATE TABLE PERSONS;
+
+
+
+
+
+
+
+
