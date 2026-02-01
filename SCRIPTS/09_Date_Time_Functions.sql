@@ -125,6 +125,32 @@ select * from salesdb.orders
 where month(orderDate)= 2;
 
 
+/* ==============================================================================
+   FORMAT()
+===============================================================================*/
+
+/* TASK 9:
+   Format CreationTime into various string representations.
+*/
+select orderid,creationTime,
+date_format(creationTime,'%Y-%M-%D') as capital,
+date_format(creationTime,'%d-%m-%y') as small,
+date_format(creationTime,'%D') day,
+date_format(creationTime,'%M') month,
+date_format(creationTime,'%Y') year
+from salesdb.orders;
+
+
+/* TASK 10:
+   Display CreationTime using a custom format:
+   Example: Day Wed Jan Q1 2025 12:34:56 PM
+*/
+select orderid,creationTime,
+concat('Day',' ',date_format(creationTime,'%a %b')-- %a for short weekname and %b for short monthname
+-- %W for full weekname %M fro ful monthname
+,' ',
+'Q',extract(quarter from creationTime),' ',
+date_format(creationTime,'%Y %h:%i:%s %p ')) as custom_format from salesdb.orders;
 
 
 
