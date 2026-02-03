@@ -153,6 +153,42 @@ concat('Day',' ',date_format(creationTime,'%a %b')-- %a for short weekname and %
 date_format(creationTime,'%Y %h:%i:%s %p ')) as custom_format from salesdb.orders;
 
 
+/* TASK 11:
+   How many orders were placed each year, formatted by month and year (e.g., "Jan 25")?
+*/
+select date_format(creationTime,'%b %Y') as 'month and year',count(*)as orders from salesdb.orders
+group by date_format(creationTime,'%b %Y');
+
+/* ==============================================================================
+   CONVERT()
+===============================================================================*/
+
+/* TASK 12:
+   Demonstrate conversion using CONVERT.
+*/
+select convert(123,signed) 'string to int',
+-- signed keyword is used to convert string to integer to opposie is unsigned;
+convert('2026-02-03',date) 'string to date',
+creationTime,
+convert(creationTime,date) 'datetime to date',
+convert(creationTime,char) 'datetime to sring'  from salesdb.orders;
+
+/* ==============================================================================
+   CAST()
+===============================================================================*/
+
+/* TASK 13:
+   Convert data types using CAST.
+*/
+select 
+cast('123' as signed) 'string to integer',
+cast(123 as char)'int to string',
+cast('2026-02-03' as date) 'string to date',
+cast('2026-02-03' as datetime) 'sring to datetime',
+creationTime,
+cast(creationTime as date)'datetime to date' from salesdb.orders;
+
+
 
 
 
