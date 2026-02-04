@@ -190,7 +190,57 @@ cast(creationTime as date)'datetime to date' from salesdb.orders;
 
 
 
+/* TASK 14:
+   Perform date arithmetic on OrderDate.
+*/
+select orderdate,date_add(orderdate,interval 2 year) 'two years later',
+date_add(orderdate,interval -4 year)'four years before',
+date_add(orderdate,interval 2 day)'two days after',
+date_add(orderdate,interval 3 month)'three months later',
+date_add(orderdate,interval -10 day) 'ten days before' from  orders;
 
+/* TASK 15:
+   Calculate the age of employees.
+*/
+select birthdate,datediff(now(),birthdate) 'age of empoyee' from employees;
+-- datediff is only returns days in result not year in mysql
+
+-- datediff() ALTERNATIVE TIMESTAMPDIFF()
+-- TIMESTAMPDIFF()-- 
+select birthdate,timestampdiff(year,birthdate,now()) 'age'from employees;
+-- we used now() function to get current date also can use curdate()
+select birthdate,timestampdiff(year,birthdate,curdate()) 'age' from employees;
+
+
+/* TASK 16:
+   Find the average shipping duration in days for each month.
+*/
+select orderdate,shipdate,datediff(shipdate,orderdate) 'sipping duration' from orders;
+-- only shipping duration
+
+select month(orderdate),round(avg(datediff(shipdate,orderdate)),0) 'avg shipping duration'from orders
+group by month(orderdate);
+-- average shipping duration
+-- use round function if average days are in decimal
+
+/* TASK 17:
+   Time Gap Analysis: Find the number of days between each order and the previous order.
+*/
+select orderdate 'current orderdate',
+lag(orderdate) over (order by orderdate) 'previous orderdate',
+datediff(orderdate,lag(orderdate) over (order by orderdate)) 'no of days'
+ from orders;
+ -- used lag() function to get previous orderdate and compare diff between current orderdate;
+ 
+ /* ==============================================================================
+   ISDATE()
+===============================================================================*/
+
+/* TASK 18:
+   Validate OrderDate using ISDATE and convert valid dates.
+*/
+select isdate('123');
+-- is date function is not in mysql
 
 
 
