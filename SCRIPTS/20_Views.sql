@@ -50,7 +50,7 @@ SELECT
     COUNT(OrderID) AS TotalOrders
 FROM Sales.Orders
 GROUP BY DATETRUNC(month, OrderDate);
-go;
+go; -- no need to write go in mysql while creating view
 
 
 /* ==============================================================================
