@@ -53,4 +53,59 @@ GROUP BY DATETRUNC(month, OrderDate);
 go;
 
 
+/* ==============================================================================
+   VIEW USE CASE | HIDE COMPLEXITY
+===============================================================================*/
+
+/* TASK:
+   Create a view that combines details from Orders, Products, Customers, and Employees.
+   This view abstracts the complexity of multiple table joins.*/
+-- creating view
+
+create view salesdb.v_order_details_EU as
+(
+select a.orderid,a.orderdate,
+b.product,b.category,
+concat(coalesce(c.firstname,''),' ',coalesce(c.lastname,''))CustomerName,c.country,
+concat(coalesce(d.firstname,''),' ',coalesce(d.lastname,''))EmployeeName,d.department
+from orders a left join products b
+on a.productid = b.productid
+left join customers c
+on a.customerid = c.customerid
+left join employees d
+on a.salespersonid = d.employeeid
+);
+
+-- retreving view table data
+select * from v_order_details;
+select customername from v_order_details;
+
+
+/* ==============================================================================
+   VIEW USE CASE | DATA SECURITY
+===============================================================================*/
+
+/* TASK:
+   Create a view for the EU Sales Team that combines details from all tables,
+   but excludes data related to the USA.
+*/
+
+create view salesdb.v_order_details_EU as
+(
+select a.orderid,a.orderdate,
+b.product,b.category,
+concat(coalesce(c.firstname,''),' ',coalesce(c.lastname,''))CustomerName,c.country,
+concat(coalesce(d.firstname,''),' ',coalesce(d.lastname,''))EmployeeName,d.department
+from orders a left join products b
+on a.productid = b.productid
+left join customers c
+on a.customerid = c.customerid
+left join employees d
+on a.salespersonid = d.employeeid
+where country !="USA"
+);
+
+select * from v_order_details_eu;
+
+
 
