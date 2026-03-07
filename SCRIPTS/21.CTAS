@@ -1,0 +1,30 @@
+-- CTAS (create TABLE FROM SELECT)
+
+select monthname(orderdate)monthnamae,count(orderid)totalorders  from orders
+group by monthname(orderdate);
+
+-- creating CTAS(create table as select)
+
+create table salesdb.monthly_orders as
+(
+select monthname(orderdate)monthnamae,count(orderid)totalorders from orders
+group by monthname(orderdate));
+-- store the result of query by creating table which we can see in database refresh daabase
+
+-- craeating ctas is beneficial to users because we just have to execute query once and store it in ctas
+-- so users dont have to wait everytime to execute query and it takes lot of time to execute everytime
+-- so its fast to execue ctas result
+-- executing ctas table
+select * from monthly_orders;
+
+-- to delete table of ctas
+drop table monthly_orders;
+
+/* HOW TO REFRESH CTAS */
+-- my sql doesnt support t-sql language run by selecting query
+drop table if exists salesdb.monthly_orders;
+create table salesdb.monthly_orders as(
+select monthname(orderdate)monthnamae,count(orderid)totalorders from orders
+group by monthname(orderdate));
+
+select * from monthly_orders;
