@@ -243,4 +243,40 @@ select isdate('123');
 -- is date function is not in mysql
 
 
+-- ALL MYSQL DATE & TIME FUNCTIONS
 
+1. Current Date & Time Functions
+Used to get the current timestamp from the database server.
+Function	    Syntax	  Description	               Example
+NOW()	       NOW()	Returns current date and time	2024-05-20 14:30:00
+CURDATE()	CURDATE()	Returns current date only	2024-05-20
+CURTIME()	CURTIME()	Returns current time only	14:30:00
+SYSDATE()	SYSDATE()	Returns exact time at execution	2024-05-20 14:30:01
+   
+2. Extraction Functions
+Used to pull specific components out of a date or time value.
+Function	Syntax	Description	                        Example
+DATE()	DATE(expr)	Extracts the date part	DATE('2024-05-20 10:00')
+YEAR()	YEAR(date)	Returns the year (1000-9999)	YEAR('2024-05-20') → 2024
+MONTH()	MONTH(date)	Returns the month (1-12)	MONTH('2024-05-20') → 5
+DAY()	DAY(date)	Returns the day (1-31)	DAY('2024-05-20') → 20
+HOUR()	HOUR(time)	Returns the hour (0-23)	HOUR('14:30:00') → 14
+EXTRACT()	EXTRACT(unit FROM date)	Pulls a specific unit	EXTRACT(WEEK FROM '2024-05-20')
+DAYNAME()	DAYNAME(date)	Returns weekday name	DAYNAME('2024-05-20') → Monday
+   
+3. Calculation & Arithmetic
+Used to perform math (addition/subtraction) or find differences.
+Function	Syntax	Description	Example
+DATE_ADD()	DATE_ADD(date, INTERVAL expr unit)	Adds time to a date	DATE_ADD('2024-05-20', INTERVAL 1 MONTH)
+DATE_SUB()	DATE_SUB(date, INTERVAL expr unit)	Subtracts time from a date	DATE_SUB('2024-05-20', INTERVAL 7 DAY)
+DATEDIFF()	DATEDIFF(expr1, expr2)	Difference in days (expr1 - expr2)	DATEDIFF('2024-05-20', '2024-05-10') → 10
+TIMESTAMPDIFF()	TIMESTAMPDIFF(unit, start, end)	Difference in a specific unit	TIMESTAMPDIFF(HOUR, '10:00', '12:00') → 2
+LAST_DAY()	LAST_DAY(date)	Last day of the month	LAST_DAY('2024-02-01') → 2024-02-29
+   
+4. Formatting & Conversion
+Used to change the visual display or data type of dates.
+Function	Syntax	Description	Example
+DATE_FORMAT()	DATE_FORMAT(date, format)	Formats date as a string	DATE_FORMAT(NOW(), '%W, %M %Y')
+STR_TO_DATE()	STR_TO_DATE(str, format)	Converts string to date	STR_TO_DATE('20-05-2024', '%d-%m-%Y')
+UNIX_TIMESTAMP()	UNIX_TIMESTAMP(date)	Converts date to Unix seconds	UNIX_TIMESTAMP('2024-05-20')
+FROM_UNIXTIME()	FROM_UNIXTIME(unix_timestamp)	Converts seconds to date	FROM_UNIXTIME(17162
